@@ -1,0 +1,25 @@
+function plot_weighted_footrule_curve(n, mVals, k, runs, topk)
+
+algNames = {'WLS','IRWLS (Proposed)'};
+
+A = length(algNames);
+
+Y = zeros(A, length(mVals));
+
+for i = 1:length(mVals)
+    R = error_measures_experiment(n, mVals(i), k, runs, topk);
+    Y(:,i) = R.wF;
+end
+
+figure; hold on; grid on;
+
+for a = 1:A
+    plot(mVals, Y(a,:), 'LineWidth',2, 'DisplayName', algNames{a});
+end
+
+xlabel('Number of comparisons m');
+ylabel('Weighted Spearman Footrule');
+title('Weighted Spearman Footrule vs m');
+legend('show','Location','northeast');
+
+end
